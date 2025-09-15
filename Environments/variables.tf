@@ -10,7 +10,7 @@ variable pip {
     type = map (any)
 }
 
-variable nic {
+variable nics {
     type = map (any)
 }
 
