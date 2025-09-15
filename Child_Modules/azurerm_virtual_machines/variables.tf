@@ -10,6 +10,10 @@ variable "resource_group_name" {
   
 }
 
+variable "nic" {
+  
+}
+
 variable "virtual_machines" {}
 
 variable "subnet_name" {

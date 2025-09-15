@@ -1,9 +1,8 @@
 resource "azurerm_network_interface" "nic_block" {
-
-  for_each            = var.virtual_machine
-  name                = "${each.value.vm_name}-nic"
+  for_each            = var.nic
+  name                = each.value.nic_name
   location            = each.value.location
-  resource_group_name = each.value.rg_name
+  resource_group_name = each.value.resource_group_name
 
   ip_configuration {
     name                          = "internal"
@@ -12,8 +11,9 @@ resource "azurerm_network_interface" "nic_block" {
   }
 }
 
+# VM Creation
 resource "azurerm_linux_virtual_machine" "vm_block" {
-  for_each            = var.virtual_machines
+  for_each            = var.virtual_machine
 
   name                = each.value.vm_name
   resource_group_name = each.value.resource_group_name
@@ -38,4 +38,20 @@ resource "azurerm_linux_virtual_machine" "vm_block" {
     sku       = each.value.image_sku
     version   = "latest"
   }
+
+# Custom data for Nginx installation
+  custom_data = base64encode(<<EOT
+#!/bin/bash
+# Update and install Nginx
+sudo apt-get update -y
+sudo apt-get install -y nginx
+
+# Enable and start Nginx
+sudo systemctl enable nginx
+sudo systemctl start nginx
+
+EOT
+  )
 }
+
+

@@ -83,6 +83,7 @@ module "virtual_machines" {
     virtual_network_name = "vnet-uat-0001"
     resource_group_name  = "rg1-uat-0001"
     rg_name = "rg1-uat-0001"
+    nic = var.nics
 }
 
 module "sql_servers" {
@@ -146,3 +147,20 @@ module "load_balancer" {
     nic_name2                     = "nic-uat-vm-0002"
 }
 
+module "application_gateway" {
+    source = "../Child_Modules/azurerm_application_gateway"
+    depends_on = [ module.resource_group, module.public_ip, module.virtual_machines, module.virtual_network, module.nsg, module.subnet_nsg_association ]
+    application_gateway_name        = "appgw-uat-0001"
+    resource_group_name             = "rg1-uat-0001"
+    location                        = "South Africa North"
+    gateway_ip_configuration_name   = "appgw-ip-config"
+    frontend_port_name              = "appgw-frontend-port"
+    frontend_ip_configuration_name  = "appgw-frontend-ip"
+    backend_address_pool_name       = "appgw-backend-pool"
+    http_setting_name               = "appgw-http-setting"
+    listener_name                   = "appgw-listener"
+    request_routing_rule_name       = "appgw-routing-rule"
+    subnet_name                     = "subnet-uat-0001"
+    virtual_network_name            = "vnet-uat-0001"
+    public_ip_name                  = "pip-uat-appgw-0001"
+}

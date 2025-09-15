@@ -20,6 +20,11 @@ subnet = {
         address_prefixes = ["10.0.2.0/24"]
         resource_group_name  = "rg1-uat-0001"    
         }
+    "subnet3" = {
+        name                = "ApplicationGatewaySubnet"
+        address_prefixes    = ["10.0.3.0/24"]
+        resource_group_name = "rg1-uat-0001"
+}    
 }
 
 pip = {
@@ -33,45 +38,51 @@ pip = {
         location            = "South Africa North"
         resource_group_name = "rg1-uat-0001"    
         }
+    "pip3" = {
+        pip_name            = "pip-uat-appgw-0001"
+        location            = "South Africa North"
+        resource_group_name = "rg1-uat-0001"    
+        }
 }
 
 nic = {
-    "nic1" = {
-        nic_name            = "nic-uat-vm-0001"
-        location            = "South Africa North"
-        resource_group_name = "rg1-uat-0001"
-        subnet_name        = "subnet-uat-0001"
-        virtual_network_name = "vnet-uat-0001"
-        }
+  "vm1" = {
+    nic_name            = "nic-uat-vm-0001"
+    location            = "South Africa North"
+    resource_group_name = "rg1-uat-0001"
+    subnet_name         = "subnet-uat-0001"
+    virtual_network_name = "vnet-uat-0001"
+  }
 
-    "nic2" = {
-        nic_name            = "nic-uat-vm-0002"
-        location            = "South Africa North"
-        resource_group_name = "rg1-uat-0001" 
-        subnet_name        = "subnet-uat-0001"
-        virtual_network_name = "vnet-uat-0001"   
-        }
+  "vm2" = {
+    nic_name            = "nic-uat-vm-0002"
+    location            = "South Africa North"
+    resource_group_name = "rg1-uat-0001"
+    subnet_name         = "subnet-uat-0001"
+    virtual_network_name = "vnet-uat-0001"
+  }
 }
 
 virtual_machine = {
-    "vm1" = {
-        vm_name             = "vm-uat-0001"
-        location            = "South Africa North"
-        resource_group_name = "rg1-uat-0001"
-        vm_size             = "Standard_B1s"
-        image_publisher     = "Canonical"
-        image_offer         = "UbuntuServer"
-        image_sku           = "18.04-LTS"
-    }
-    "vm2" = {
-        vm_name             = "vm-uat-0002"
-        location            = "South Africa North"
-        resource_group_name = "rg1-uat-0001"
-        vm_size             = "Standard_B1s"
-        image_publisher    = "Canonical"
-        image_offer        = "UbuntuServer"
-        image_sku          = "18.04-LTS"
-    }
+  "vm1" = {
+    vm_name             = "vm-uat-0001"
+    location            = "South Africa North"
+    resource_group_name = "rg1-uat-0001"
+    vm_size             = "Standard_B1s"
+    image_publisher     = "Canonical"
+    image_offer         = "UbuntuServer"
+    image_sku           = "18.04-LTS"
+  }
+
+  "vm2" = {
+    vm_name             = "vm-uat-0002"
+    location            = "South Africa North"
+    resource_group_name = "rg1-uat-0001"
+    vm_size             = "Standard_B1s"
+    image_publisher     = "Canonical"
+    image_offer         = "UbuntuServer"
+    image_sku           = "18.04-LTS"
+  }
 }
 
 sqldb = {
