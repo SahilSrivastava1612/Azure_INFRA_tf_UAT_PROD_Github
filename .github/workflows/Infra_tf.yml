@@ -6,6 +6,9 @@ permissions:
   contents: read
   id-token: write
 
+env:
+  WORK_DIR: Environments  
+
 jobs:
   terraform_job:
     name: Terraform Job  
@@ -23,28 +26,28 @@ jobs:
       - name: Azure Login
         uses: Azure/login@v2.3.0
         with:
-          client-id: 
-          tenant-id: 
-          subscription-id: 
+          client-id: ${{ secrets.CLIENT_ID }}
+          tenant-id: ${{ secrets.TENANT_ID }}
+          subscription-id: ${{ secrets.SUBSCRIPTION_ID }}
 
       - name: Terraform fmt
         id: fmt
-        working-directory: Environments
+        working-directory: ${{ env.WORK_DIR }}
         run: terraform fmt -check
         continue-on-error: true
 
       - name: Terraform Init
         id: init
-        working-directory: Environments
+        working-directory: ${{ env.WORK_DIR }}
         run: terraform init -input=false
 
       - name: Terraform Validate
         id: validate
-        working-directory: Environments
+        working-directory: ${{ env.WORK_DIR }}
         run: terraform validate -no-color
 
       - name: Terraform Plan
         id: plan
-        working-directory: Environments
+        working-directory: ${{ env.WORK_DIR }}
         run: terraform plan -no-color -input=false
         continue-on-error: true 
