@@ -18,6 +18,33 @@ jobs:
       - name: Install Terraform
         uses: hashicorp/setup-terraform@v2
         with:
-            terraform_version: 1.7.5
+            terraform_version: 1.13.1
 
-             
+      - name: Azure Login
+        uses: Azure/login@v2.3.0
+        with:
+          client-id: 
+          tenant-id: 
+          subscription-id: 
+
+      - name: Terraform fmt
+        id: fmt
+        working-directory: Environments
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        working-directory: Environments
+        run: terraform init -input=false
+
+      - name: Terraform Validate
+        id: validate
+        working-directory: Environments
+        run: terraform validate -no-color
+
+      - name: Terraform Plan
+        id: plan
+        working-directory: Environments
+        run: terraform plan -no-color -input=false
+        continue-on-error: true 
