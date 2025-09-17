@@ -18,11 +18,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5.0.0
 
-      - name: Install Terraform
-        uses: hashicorp/setup-terraform@v2
-        with:
-            terraform_version: 1.13.1
-
       - name: Azure Login
         uses: Azure/login@v2.3.0
         with:
@@ -33,8 +28,7 @@ jobs:
       - name: Terraform fmt
         id: fmt
         working-directory: ${{ env.WORK_DIR }}
-        run: terraform fmt -check
-        continue-on-error: true
+        run: terraform fmt
 
       - name: Terraform Init
         id: init
@@ -50,4 +44,3 @@ jobs:
         id: plan
         working-directory: ${{ env.WORK_DIR }}
         run: terraform plan -no-color -input=false
-        continue-on-error: true 
